@@ -16,8 +16,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class checkpoint {
 
@@ -60,7 +59,7 @@ public class checkpoint {
         lls = new LinkedList<>();
         coverednodes = new LinkedList<>();
         port = new LinkedList<>();
-		neighbours = new LinkedList<>(); 
+		neighbours = new LinkedList<>();
 		nextHost = new LinkedList<>();
 		hostWork = new LinkedList<>();
 	}
@@ -68,7 +67,7 @@ public class checkpoint {
 	void startThread() {
         final int numProcesses = neighbours.size();
         final int nos = totalnodes;
-        vectorClock = new int[nos]; 
+        vectorClock = new int[nos];
         last_label_Sent = new int[numProcesses];
         last_label_rcvd = new int[numProcesses];
         label_value = new int[numProcesses];
@@ -119,11 +118,7 @@ public class checkpoint {
                  DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, Integer.parseInt(server.port.get(id - 1)));
                  clientSocket.send(sendPacket);
                  clientSocket.close();
-                 /*DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-                 clientSocket.receive(receivePacket);
-                 modifiedSentence = new String(receivePacket.getData());
-                 System.out.println("FROM SERVER:" + modifiedSentence);
-                 clientSocket.close();*/
+                
             } catch (IOException e) {
 
             }
@@ -218,7 +213,7 @@ public class checkpoint {
                 s+=first_label_sent[i]+",";
                 last_checkpoint_sent[i] = first_label_sent[i];
                 last_label_rcvd[i] = -1;
-                first_label_sent[i] = -1; 
+                first_label_sent[i] = -1;
             }
             lls.add(s);
             llr.add(l);
@@ -410,7 +405,7 @@ public class checkpoint {
 
             else if(Integer.parseInt(type)==Message.STEP.id)
             {
-                
+
             }
             else if(Integer.parseInt(type)==Message.RECOVER.id)
             {
@@ -441,10 +436,10 @@ public class checkpoint {
                         recover();
                     floodNetwork1(id+";"+3+";"+covered());
                 }
-                
+
                 //iterator ++;
                 reply="recover";
-                
+
             }
             else if(Integer.parseInt(type)==Message.VER.id)
             {
@@ -461,7 +456,7 @@ public class checkpoint {
                     //if(i1!=id)
                         //sender(id+";"+4+";-1;"+iterator,i1+1);*/
 
-                
+
             }
             else
             {
@@ -473,7 +468,7 @@ public class checkpoint {
 
         @Override
         public void run() {
-        	
+
             //if(id==0)
             	//messageProcessor("test1;-1");
             String host = server.hostname.get(id);
@@ -545,7 +540,7 @@ public class checkpoint {
         public void setfLS(int index,int labelvalue)
         {
             if(first_label_sent[index]==-1)
-                first_label_sent[index] = labelvalue; 
+                first_label_sent[index] = labelvalue;
 
             last_label_Sent[index] = labelvalue;
         }
@@ -600,12 +595,12 @@ public class checkpoint {
                  clientSocket.close();
             } catch (IOException e) {
                 System.out.println(e);
-            }   
+            }
         }
 
         @Override
         public void run() {
-            //System.out.println(nextHost.size()+" hostwork number- - - ----");
+
             while(iterator<nextHost.size())
             {
                 if(true)
@@ -621,10 +616,10 @@ public class checkpoint {
                 }
                 else
                 {
-                    //System.out.println("hereeeeeeeeeee"+sendappmessages);
+                    //System.out.println("here"+sendappmessages);
                 }
             }
-            
+
         }
     }
 
@@ -647,7 +642,7 @@ public class checkpoint {
         @Override
         public void run() {
             int i = 0;
-            
+
             while(iterator<nextHost.size())
             {
                 try{
@@ -659,16 +654,16 @@ public class checkpoint {
                 }
                 if(sendappmessages == false)
                 {
-                    
+
                     sendappmessages = true;
                     check = 0;
                     check1 = 0;
-                    //System.out.println("Check:"+sendappmessages);
+
                     iterator +=1;
                     System.out.println("Iterator:"+iterator);
                     try{
                     appThread.sleep(maxdelay);
-                    //System.out.println("heyyyyyyy------"+sendappmessages+"------");
+
                     }
                     catch(Exception e)
                     {
@@ -679,15 +674,14 @@ public class checkpoint {
                 {
                     try{
                     appControlThread.sleep(1000);
-                    //System.out.println("heyyyyyyy------"+sendappmessages+"------");
+
                 }
                 catch(Exception e)
                 {
                     System.out.println(e);
                 }
                     sendappmessages = false;
-                    //System.out.println("Check:"+sendappmessages);
-                    //System.out.println(hostWork.size()+" hostwork "+iterator);
+
                     if(hostWork.size()>iterator)
                     {
                         int x = 0;
@@ -731,7 +725,7 @@ public class checkpoint {
                              //iterator++;
                             } catch (IOException e) {
                                 System.out.println(e);
-                            }  
+                            }
 
                         }
 
@@ -773,16 +767,16 @@ public class checkpoint {
                             // iterator++;
                         } catch (IOException e) {
                             System.out.println(e);
-                        } 
+                        }
 
 
-                        
+
                         }
                         else
                         {
                             System.out.println("no no no");
                         }
-                        
+
                     }
                 }
                 i++;
@@ -791,8 +785,8 @@ public class checkpoint {
             {
                 System.out.println(vclock.get(j));
             }
-             
-            
+
+
         }
     }
 
@@ -805,7 +799,7 @@ public class checkpoint {
         id = 2;
         checkpoint main = new checkpoint(id);
         int totalneigbhours = 0 ;
-       
+
 
             main.hostname.add("localhost");
             main.port.add(4567);
@@ -828,17 +822,17 @@ public class checkpoint {
             main.nextHost.add(2);
             main.nextHost.add('r');
 
-            
+
             if(main.nextHost.get(0)==id)
             {
                 main.task = true;
                 main.taskid = id;
-                main.taskval = main.hostWork.get(0); 
+                main.taskval = main.hostWork.get(0);
             }
 
             main.startThread();
 
 
-        } 
-   
+        }
+
 }
